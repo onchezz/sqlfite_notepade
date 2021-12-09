@@ -16,13 +16,16 @@ import 'package:notepad/screens/user.dart';
 import 'package:notepad/wigets/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey _globalKey = GlobalKey();
   Note mynote = Note();
   DatabaseHelper dbHelper = DatabaseHelper();
   late ScrollController _itemcontroller;
@@ -388,25 +391,60 @@ class _HomePageState extends State<HomePage> {
               size: 38,
               color: Colors.black,
             ),
-            onSelected: (result) {},
+            onSelected: (value) {
+              if (value == 1) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const UserPage()));
+              } else if (value == 2) {
+                _onChangeList();
+              } else if (value == 3) {}
+            },
             itemBuilder: (context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                // value: myPopUP.user,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [Icon(Icons.person), Text('user')],
-                ),
-              ),
               PopupMenuItem(
                 value: 1,
                 child: Row(
-                  children: const [Icon(Icons.list), Text('list')],
+                  children: const [
+                    Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('user')
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: [
+                    Icon(
+                      isList ? Icons.grid_on : Icons.list,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      isList ? 'grid view' : 'list view',
+                    )
+                  ],
                 ),
               ),
               PopupMenuItem(
                 value: 3,
                 child: Row(
-                  children: const [Icon(Icons.settings), Text('settings')],
+                  children: const [
+                    Icon(
+                      Icons.settings,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('settings')
+                  ],
                 ),
               ),
             ],
@@ -458,13 +496,7 @@ class _HomePageState extends State<HomePage> {
                             : const Icon(Icons.arrow_upward_outlined),
                       )
                     : SpeedDialChild(),
-                SpeedDialChild(
-                  label: isList ? 'grid view' : 'list view',
-                  onTap: _onChangeList,
-                  child: isList
-                      ? const Icon(Icons.grid_on)
-                      : const Icon(Icons.list),
-                ),
+               
                 SpeedDialChild(
                   label: 'add note',
                   onTap: () {
