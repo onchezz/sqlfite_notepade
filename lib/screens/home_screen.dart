@@ -17,7 +17,6 @@ import 'package:notepad/wigets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -104,7 +103,6 @@ class _HomePageState extends State<HomePage> {
             id: snapshot.data[index].id,
             title: snapshot.data[index].title,
             note: snapshot.data[index].note,
-            
           );
           Navigator.push(
                   context,
@@ -384,54 +382,31 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             width: 10,
           ),
-          PopupMenuButton<myPopUP>(
+          PopupMenuButton(
             icon: const Icon(
               Icons.more_vert,
               size: 38,
               color: Colors.black,
             ),
-            onSelected: (myPopUP result) {
-              setState(() {
-                // _selection = result;
-              });
-            },
-            // shape: ,
-            itemBuilder: (context) => <PopupMenuEntry<myPopUP>>[
-              PopupMenuItem<myPopUP>(
-                onTap: () async {
-                  await Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    print('Navigating ');
-                    return const UserPage();
-                  }));
-                },
+            onSelected: (result) {},
+            itemBuilder: (context) => <PopupMenuEntry>[
+              PopupMenuItem(
                 // value: myPopUP.user,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const [Icon(Icons.person), Text('user')],
                 ),
               ),
-              PopupMenuItem<myPopUP>(
-                value: myPopUP.list,
+              PopupMenuItem(
+                value: 1,
                 child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.list),
-                      onPressed: () {},
-                    ),
-                    const Text('list')
-                  ],
+                  children: const [Icon(Icons.list), Text('list')],
                 ),
               ),
-              PopupMenuItem<myPopUP>(
-                value: myPopUP.settings,
+              PopupMenuItem(
+                value: 3,
                 child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {},
-                    ),
-                    const Text('settings')
-                  ],
+                  children: const [Icon(Icons.settings), Text('settings')],
                 ),
               ),
             ],
